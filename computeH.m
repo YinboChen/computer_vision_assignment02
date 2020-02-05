@@ -2,8 +2,9 @@ function[outputH]=computeH()
 % 1. write an random func to retrieve four points' coordinates from getPoints(load)
 % 2.built a matrix to compute H?9*1?
 % 3.reshape H to(3*3)
-% 4.compute the mini error using distance between two points|AB|= sqrt((x1-x2)^2+(y1-y2)^2);
-
+% 4.compute the mini error using distance between two points|AB|=
+% sqrt((x1-x2)^2+(y1-y2)^2)for 20 times
+testImg = imread('Square0.jpg');
 load('output.mat');
 % [r,c,rp,cp]/compare[y x] each row
 disp('Output matrix has been loaded!!!')
@@ -81,7 +82,8 @@ end
       end
       
 end
-   outputH;
+   outputH
+  Htest = outputH.*(1/outputH(9))
    output_error
     
 end
