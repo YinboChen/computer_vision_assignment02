@@ -76,33 +76,69 @@ project_corner_inImg2
 
 final_output_inImg(1+abs(Min_y)+1:R2+abs(Min_y)+1,1:C2,:)=inImg1(1:R1,1:C1,:);
 % mapping inImg1 into final_output_img
-% final_output_inImg()=inImg2(1:R2,1:C2,:);
 
-mesh_R_warp = 1:Max_y-Min_y;
-mesh_C_warp = 1:Max_x-Min_x;
 
-[XW,YW]= meshgrid(mesh_C_warp,mesh_R_warp);
-% setup a warped coordinates mapping for inImg2
+
 
 % G = interp2(X,Y,inImg2(:,:,1),XW,YW,'linear');
 
  for m = 1: R2
     for n= 1: C2
         
+       
+        
          tempXYZ = [n,m,1]*inv(H);
          new_coord = (tempXYZ/tempXYZ(3));
-         final_r = ceil(new_coord(2));  
+          final_r = ceil(new_coord(2));  
+          
+         final_R(m,:)= final_r;
 %           save y coordinates after transfored by H matrix as a R2*1
 %           vector
-         final_c = ceil(new_coord(1)); 
+          final_c = ceil(new_coord(1)); 
+        final_C(n,:)= final_c;
 %           save x coordinates after transfored by H matrix as a C2*1
-%           vector          
-         final_output_inImg(final_r+abs(Min_y)+1,final_c,:)= inImg2(m,n,:);
-%          final_output_inImg(m+abs(Min_y)+1,n,:)=inImg1(m,n,:);
+%           vector  
+        
+%         final_output_inImg(final_r+abs(Min_y)+1,final_c,:)= inImg2(m,n,:);
+      
          
      end
  end
- 
+%  after I finished, I found I used the forward warping and had lots of
+%  hole!!!!!!!!
+
+mesh_R_warp = 1:Max_y;
+mesh_C_warp = 1:Max_x;
+
+[XW,YW]= meshgrid(mesh_C_warp,mesh_R_warp);
+% setup a warped coordinates mapping for inImg2
+G = interp2(inImg2(:,:,1),XW,YW);
+% imshow(uint8(G));
+
+for i = 1: Max_y
+    for j= 1: Max_x
+        
+       
+        temp_source_x_y =[j,i,1]*H;
+        source_x_y = temp_source_x_y/temp_source_x_y(3);
+        source_x_y = floor(source_x_y);
+        cu = source_x_y(1);
+        rv = source_x_y(2);
+        Cu(j,:)=cu;        
+        Rv(i,:)=rv;
+        Min_cu =min(Cu);
+        Max_cu =max(Cu);
+        Min_rv =min(Rv);
+        Max_rv =max(Rv);
+       cu(find(cu<1))=1;
+       cu(find(cu>C2))=C2;
+       rv(find(rv<1))=1;
+       rv(find(rv>R2))=R2;
+         final_output_inImg(i,j,:)= inImg2(rv,cu,:);
+    end
+end
+
+final_output_inImg(1+abs(Min_y)+1:R2+abs(Min_y)+1,1:C2,:)=inImg1(1:R1,1:C1,:);
 
  imshow(uint8(final_output_inImg));
 end
