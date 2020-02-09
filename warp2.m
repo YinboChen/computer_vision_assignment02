@@ -1,6 +1,6 @@
-function [outImg] = warp1(H,inImg1,inImg2)
+function [outImg] = warp2(H,inImg1,inImg2)
 % 
-% 
+% inverse warping
 % 
  load('outputH.mat');
  H = outputH
@@ -48,8 +48,8 @@ for i = 1 : 4
       project_corner_inImg2(i,:) = round(temp_inImg2/temp_inImg2(3));
 %       let z = 1     
 end
-x_array =[x_inImg2(1),x_inImg2(1),x_inImg2(1),x_inImg2(C2),project_corner_inImg2(1,1),project_corner_inImg2(2,1),project_corner_inImg2(3,1),project_corner_inImg2(4,1)];
-y_array =[y_inImg2(1),y_inImg2(1),y_inImg2(R2),y_inImg1(R2),project_corner_inImg2(1,2),project_corner_inImg2(2,2),project_corner_inImg2(3,2),project_corner_inImg2(4,2)];
+x_array =[x_inImg1(1),x_inImg1(1),x_inImg1(1),x_inImg1(C2),project_corner_inImg1(1,1),project_corner_inImg1(2,1),project_corner_inImg1(3,1),project_corner_inImg1(4,1)];
+y_array =[y_inImg1(1),y_inImg1(1),y_inImg1(R2),y_inImg1(R2),project_corner_inImg1(1,2),project_corner_inImg1(2,2),project_corner_inImg1(3,2),project_corner_inImg1(4,2)];
 % save all 8 x and y coordinates in this array
 Min_x = min(x_array);
 % this's the min C num from "blank final image"
@@ -70,11 +70,11 @@ project_corner_inImg1
 project_corner_inImg2
 %bounding box four corners
 
-[X,Y] = meshgrid(x_inImg2,y_inImg2);
+[X,Y] = meshgrid(x_inImg1,y_inImg1);
 % setup a original coordinates mapping for inImg2
 
 
-final_output_inImg(1+abs(Min_y)+1:R2+abs(Min_y)+1,1:C2,:)=inImg1(1:R1,1:C1,:);
+final_output_inImg(1+abs(Min_y)+1:R2+abs(Min_y)+1,1:C2,:)=inImg1(1:R2,1:C2,:);
 % mapping inImg1 into final_output_img
 % final_output_inImg()=inImg2(1:R2,1:C2,:);
 
@@ -85,19 +85,19 @@ mesh_C_warp = 1:Max_x-Min_x;
 % setup a warped coordinates mapping for inImg2
 
 % G = interp2(X,Y,inImg2(:,:,1),XW,YW,'linear');
-
- for m = 1: R2
-    for n= 1: C2
+ imshow(uint8(final_output_inImg));
+ for m = 1: R1
+    for n= 1: C1
         
-         tempXYZ = [n,m,1]*inv(H);
+         tempXYZ = [n,m,1]*(H);
          new_coord = (tempXYZ/tempXYZ(3));
          final_r = ceil(new_coord(2));  
 %           save y coordinates after transfored by H matrix as a R2*1
 %           vector
-         final_c = ceil(new_coord(1)); 
+         final_c = round(new_coord(1)); 
 %           save x coordinates after transfored by H matrix as a C2*1
 %           vector          
-         final_output_inImg(final_r+abs(Min_y)+1,final_c,:)= inImg2(m,n,:);
+         final_output_inImg(final_r+abs(Min_y)+1,final_c,:)= inImg1(m,n,:);
 %          final_output_inImg(m+abs(Min_y)+1,n,:)=inImg1(m,n,:);
          
      end
