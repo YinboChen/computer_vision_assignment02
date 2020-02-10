@@ -1,7 +1,16 @@
-function[output] = getPoints()
-
-inImg1 = imread('Square0.jpg');
-inImg2 = imread('Square1.jpg');
+function[output] = getPoints(input_img1,input_img2)
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CSCI 5722 Computer Vision
+% Name: Yinbo Chen
+% Professor: Ioana Fleming
+% Assignment: HW2 due 2/9 2020
+% Purpose: For better understanding of image warping 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% inImg1 = imread('Square0.jpg');
+% inImg2 = imread('Square1.jpg');
+inImg1 = input_img1;
+inImg2 = input_img2;
 % read two original images from local files
 Temp1st = zeros(10,2);
 % defined the first image's coordinates 10*2 matrix
