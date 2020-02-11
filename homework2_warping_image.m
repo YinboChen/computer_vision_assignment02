@@ -23,10 +23,10 @@ while choice ~= 1
            disp('Error - please choose one of the options.')
            % Display a menu and get a choice
            choice = menu('Choose an option', 'Exit Program', 'Load First Image','Load Second Image','Display images'...
-               ,'Load H_homography','Image Mosaics');  % as you develop functions, add buttons for them here
+               ,'Load H_homography','Image Mosaics','frameImg');  % as you develop functions, add buttons for them here
         case 2
            % Load the first image
-           image_choice = menu('Choose an image', 'Square0', 'case1_1', 'case2_1');
+           image_choice = menu('Choose an image', 'Square0', 'case1_1', 'case2_1','becca');
            switch image_choice
                case 1
                    filename = 'Square0.jpg';
@@ -34,6 +34,8 @@ while choice ~= 1
                    filename = 'case1_1.jpg';
                case 3
                    filename = 'case2_1.jpg';
+               case 4
+                   filename = 'becca.jpg';
                
                % fill in cases for the first image which you want to use
            end
@@ -41,7 +43,7 @@ while choice ~= 1
            
            case 3
            % Load the second image
-           image_choice = menu('Choose an image', 'Square1', 'case1_2', 'case2_2');
+           image_choice = menu('Choose an image', 'Square1', 'case1_2', 'case2_2','billboard');
            switch image_choice
                case 1
                    filename = 'Square1.jpg';
@@ -49,6 +51,8 @@ while choice ~= 1
                    filename = 'case1_2.jpg';
                case 3
                    filename = 'case2_2.jpg';
+               case 4
+                   filename = 'billboard.jpg';
                
                % fill in cases for the second images you plan to use
            end
@@ -101,6 +105,9 @@ while choice ~= 1
             subplot(1,3,3),imshow(mosaicsed_output_image),title('mosaicsed image');
             end
             
+       case 7
+%            Warp one image into a "frame" region in the second image
+            frameImg(inImg1,inImg2);
             
 
             
@@ -111,6 +118,6 @@ while choice ~= 1
 %    choice = menu('Choose an option', 'Exit Program', 'Load Image', ...
 %     'Display Image', 'Mean Filter');  % as you develop functions, add buttons for them here
     choice = menu('Choose an option', 'Exit Program', 'Load First Image','Load Second Image','Display images'...
-               ,'Load H_homography','Image Mosaics');  % as you develop functions, add buttons for them here
+               ,'Load H_homography','Image Mosaics','frameImg');  % as you develop functions, add buttons for them here
 end
   
