@@ -36,6 +36,8 @@ while choice ~= 1
                    filename = 'case2_1.jpg';
                case 4
                    filename = 'becca.jpg';
+%                    Becca is my pet. She is a little monster... We adopted
+%                    her from the Boulder's shelter.
                
                % fill in cases for the first image which you want to use
            end
@@ -53,6 +55,9 @@ while choice ~= 1
                    filename = 'case2_2.jpg';
                case 4
                    filename = 'billboard.jpg';
+%                    billboard.jpg from internet, the original address is
+%                    'https://www.brain-sharper.com/science/pollution-reducing-billboard/'.
+%                    The author is Jordana Crawford. Thank you so much.
                
                % fill in cases for the second images you plan to use
            end
